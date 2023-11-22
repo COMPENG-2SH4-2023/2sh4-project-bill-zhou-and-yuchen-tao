@@ -1,11 +1,17 @@
 #include <iostream>
 #include "MacUILib.h"
 #include "objPos.h"
+#include "GameMechs.h"
+#include "Player.h"
+
 
 
 using namespace std;
 
 #define DELAY_CONST 100000
+
+GameMechs* myGM;
+Player* myPlayer:
 
 bool exitFlag;
 
@@ -23,7 +29,7 @@ int main(void)
 
     Initialize();
 
-    while(exitFlag == false)  
+    while(myGW -> getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
