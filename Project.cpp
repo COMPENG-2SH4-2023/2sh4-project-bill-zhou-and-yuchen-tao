@@ -13,9 +13,7 @@ using namespace std;
 GameMechs* myGM;
 Player* myPlayer;
 
-objPos myPos;
 
-bool exitFlag;
 
 void Initialize(void);
 void GetInput(void);
@@ -49,26 +47,56 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myPos.setObjPos(5, 5, '@');
+    myGM = new GameMechs();
+    myPlayer = new Player(myGM);
 
-    exitFlag = false;
 }
 
 void GetInput(void)
 {
-   
+
 }
 
 void RunLogic(void)
 {
-    
+    if(myGM -> getInput() == ' ')
+        myGM -> setExitTrue();
+    myPlayer -> updatePlayerDir();
+    myPlayer -> movePlayer();
 }
 
 void DrawScreen(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen(); 
 
-    MacUILib_printf("Object: <%d, %d> with %c\n", myPos.x, myPos.y, myPos.symbol);
+    objPos tempPos;
+    myPlayer -> getPlayerPos(tempPos);   
+
+    MacUILib_printf("BoardSize: %d*%d, Player: <%d, %d> with %c\n", 
+                    myGM -> getBoardSizeX(), myGM -> getBoardSizeY(), 
+                    tempPos.x, tempPos.y, tempPos.symbol);
+
+    for(int i = 0; i < myGM -> getBoardSizeY(); i++)
+    {
+        MacUILib_printf("#");
+        for(int j = 1; j < myGM -> getBoardSizeX() - 1; j++)
+        {
+            if(i == 0 || i == myGM -> getBoardSizeY() - 1)
+            {
+                MacUILib_printf("#");
+            }
+            else if(j == tempPos.x && i == tempPos.y)
+            {
+                MacUILib_printf("%c", tempPos.symbol);
+            }
+            else
+            {
+                MacUILib_printf(" ");
+            }
+        }
+        MacUILib_printf("#");
+        MacUILib_printf("\n");
+    }
 }
 
 void LoopDelay(void)
@@ -80,6 +108,11 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
+
+    delete myPlayer;
+    delete myGM;
   
     MacUILib_uninit();
+
+
 }
