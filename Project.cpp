@@ -11,7 +11,9 @@ using namespace std;
 #define DELAY_CONST 100000
 
 GameMechs* myGM;
-Player* myPlayer:
+Player* myPlayer;
+
+objPos myPos;
 
 bool exitFlag;
 
@@ -29,7 +31,7 @@ int main(void)
 
     Initialize();
 
-    while(myGW -> getExitFlagStatus() == false)  
+    while(myGM -> getExitFlagStatus() == false)  
     {
         GetInput();
         RunLogic();
@@ -46,6 +48,8 @@ void Initialize(void)
 {
     MacUILib_init();
     MacUILib_clearScreen();
+
+    myPos.setObjPos(5, 5, '@');
 
     exitFlag = false;
 }
@@ -64,6 +68,7 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();    
 
+    MacUILib_printf("Object: <%d, %d> with %c\n", myPos.x, myPos.y, myPos.symbol);
 }
 
 void LoopDelay(void)
