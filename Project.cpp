@@ -54,7 +54,7 @@ void Initialize(void)
 
 void GetInput(void)
 {
-
+    int input = myGM -> getInput();
 }
 
 void RunLogic(void)
