@@ -61,7 +61,7 @@ void testConstructor()
 void testInsertHead_1Element()
 {
 	objPos currentPos;
-	objPos samplePos{2, 5, 'a'};  
+	objPos samplePos(2, 5, 'a');  
 
 	// Insert 1 sample element
 	objPosArrayList thisList;
@@ -129,8 +129,8 @@ void testInsertHead_1Element()
 void testInsertHead_5Element()
 {
 	objPos currentPos;
-	objPos bodyPos{2, 5, 'a'};  
-	objPos headPos{3, 3, 'm'};
+	objPos bodyPos(2, 5, 'a');  
+	objPos headPos(3, 3, 'm');
 
 	// Insert 4 body elements, then 1 unique head element
 	objPosArrayList thisList;
@@ -205,7 +205,7 @@ void testInsertHead_5Element()
 void testInsertTail_1Element()
 {
 	objPos currentPos;
-	objPos samplePos{2, 5, 'a'};  
+	objPos samplePos(2, 5, 'a');  
 
 	// Insert 1 sample element
 	objPosArrayList thisList;
@@ -272,8 +272,8 @@ void testInsertTail_1Element()
 void testInsertTail_5Element()
 {
 	objPos currentPos;
-	objPos bodyPos{2, 5, 'a'};  
-	objPos tailPos{3, 3, 'm'};
+	objPos bodyPos(2, 5, 'a');  
+	objPos tailPos(3, 3, 'm');
 
 	// Insert 4 body elements, then 1 unique head element
 	objPosArrayList thisList;
@@ -345,7 +345,7 @@ void testInsertTail_5Element()
 void testRemoveHead_1Element()
 {
 	objPos currentPos;
-	objPos samplePos{2, 5, 'a'};  
+	objPos samplePos(2, 5, 'a');  
 
 	// Insert 1 sample element
 	objPosArrayList thisList;
@@ -374,8 +374,8 @@ void testRemoveHead_1Element()
 void testRemoveHead_5Element()
 {
 	objPos currentPos;
-	objPos bodyPos{2, 5, 'a'};  
-	objPos headPos{3, 3, 'm'};
+	objPos bodyPos(2, 5, 'a');  
+	objPos headPos(3, 3, 'm');
 
 	// Insert 4 body elements, then 1 unique head element
 	objPosArrayList thisList;
@@ -439,7 +439,7 @@ void testRemoveHead_5Element()
 void testRemoveTail_1Element()
 {
 	objPos currentPos;
-	objPos samplePos{2, 5, 'a'};  
+	objPos samplePos(2, 5, 'a');  
 
 	// Insert 1 sample element
 	objPosArrayList thisList;
@@ -468,8 +468,8 @@ void testRemoveTail_1Element()
 void testRemoveTail_5Element()
 {
 	objPos currentPos;
-	objPos bodyPos{2, 5, 'a'};  
-	objPos tailPos{3, 3, 'm'};
+	objPos bodyPos(2, 5, 'a');  
+	objPos tailPos(3, 3, 'm');
 
 	// Insert 4 body elements, then 1 unique head element
 	objPosArrayList thisList;
