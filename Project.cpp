@@ -73,7 +73,6 @@ void RunLogic(void)
     {
         myPlayer -> increasePlayerLength();
         myFood -> generateFood(myPlayer -> getPlayerPos());
-
     }
 
 
@@ -86,52 +85,40 @@ void DrawScreen(void)
     objPosArrayList* tempPosList = myPlayer->getPlayerPos();
     objPos tempPos;
     objPos tempFoodPos;  
-    tempPosList -> getHeadElement(tempPos);
     myFood -> getFoodPos(tempFoodPos); 
-/*
-    for(int i = 0 ; i < myGM -> getBoardSizeY(); i++)
-    {
-        for(int j = 1; j < myGM -> getBoardSizeX() - 1; j++)
-        {
-            for(int k = 1; k < tempPos -> getSize() ; k++)
-            {
-
-            }
-        }
-    }
-
-*/
-    MacUILib_printf("BoardSize: %d*%d, Player: <%d, %d> with %c\n", 
-                    myGM -> getBoardSizeX(), myGM -> getBoardSizeY(), 
-                    tempPos.x, tempPos.y, tempPos.symbol);
-    MacUILib_printf("Food: <%d, %d> with %c\n",  
-                    tempFoodPos.x, tempFoodPos.y, tempFoodPos.symbol);
 
     for(int i = 0; i < myGM -> getBoardSizeY(); i++)
     {
         MacUILib_printf("#");
         for(int j = 1; j < myGM -> getBoardSizeX() - 1; j++)
         {
+            
             for(int k = 0; k < tempPosList -> getSize() ; k++)
             {
                 tempPosList -> getElement(tempPos,k);
-                if(i == 0 || i == myGM -> getBoardSizeY() - 1)
+                if(j == tempPos.x && i == tempPos.y)
                 {
-                    MacUILib_printf("#");
+                    break;
                 }
-                else if(j == tempPos.x && i == tempPos.y)
-                {
-                    MacUILib_printf("%c", tempPos.symbol);
-                }
-                //food
-                else if(j == tempFoodPos.x && i == tempFoodPos.y)
-                {
-                    MacUILib_printf("%c", tempFoodPos.symbol);
-                }
-                else
-                {
-                    MacUILib_printf(" ");
-                }
+            }
+            //tempPosList -> getElement(tempPos,0);
+            if(i == 0 || i == myGM -> getBoardSizeY() - 1)
+            {
+                MacUILib_printf("#");
+            }
+            //Food
+            else if(j == tempFoodPos.x && i == tempFoodPos.y)
+            {
+                MacUILib_printf("%c", tempFoodPos.symbol);
+            }
+            //Player
+            else if(j == tempPos.x && i == tempPos.y)
+            {
+                MacUILib_printf("%c", tempPos.symbol);
+            }
+            else
+            {
+                MacUILib_printf(" ");
             }
         }
         MacUILib_printf("#");
