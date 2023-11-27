@@ -50,10 +50,9 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     objPos tempPos;
-
-    myGM = new GameMechs();
-    myPlayer = new Player(myGM);
     myFood = new Food();
+    myGM = new GameMechs();
+    myPlayer = new Player(myGM, myFood);
     myPlayer -> getPlayerPos(tempPos);
     myFood -> generateFood(tempPos);
 
@@ -61,15 +60,22 @@ void Initialize(void)
 
 void GetInput(void)
 {
-
+    if(myGM -> getInput() == ' ')
+        myGM -> setExitTrue();
 }
 
 void RunLogic(void)
 {
-    if(myGM -> getInput() == ' ')
-        myGM -> setExitTrue();
     myPlayer -> updatePlayerDir();
     myPlayer -> movePlayer();
+    if(Player -> checkFoodConsumption())
+    {
+        myPlayer -> increasePlayerLength();
+        myFood -> generateFood(myPlayer -> getPlayerPos());
+
+    }
+
+
 }
 
 void DrawScreen(void)
