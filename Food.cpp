@@ -10,24 +10,31 @@ Food::~Food()
 
 }
 
-void Food::generateFood(objPos blockOff)
+void Food::generateFood(objPosArrayList* blockOff)
 {
     srand(time(NULL));
     bool generate = false;
     char rand_symbol;
     objPos rand_coord;
     GameMechs GM;
+    objPos tempBlockOff;
 
     int coordV[28][13] = {0};
 
     while(!generate)
     {
+        int _Flag = 1;
         rand_coord.setObjPos((rand() % (GM.getBoardSizeX() - 2)) + 1, (rand() % (GM.getBoardSizeY() - 2)) + 1, '0');
-        if(rand_coord.x == blockOff.x && rand_coord.y == blockOff.y)
+        for(int i = 0 ; i < blockOff -> getSize() ; i++)
         {
-            continue;
+            blockOff -> getElement(tempBlockOff, i);
+            if(rand_coord.x == tempBlockOff.x && rand_coord.y == tempBlockOff.y)
+            {
+                _Flag = 0;
+                break;
+            }
         }
-        else
+        if(_Flag)
         {
             if(coordV[rand_coord.x - 1][rand_coord.y - 1] == 0)
             {

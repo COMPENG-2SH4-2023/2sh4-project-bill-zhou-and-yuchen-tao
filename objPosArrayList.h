@@ -4,7 +4,6 @@
 #define ARRAY_MAX_CAP 200
 
 #include "objPos.h"
-#include "Player.h"
 
 class objPosArrayList
 {

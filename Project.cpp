@@ -53,8 +53,9 @@ void Initialize(void)
     myFood = new Food();
     myGM = new GameMechs();
     myPlayer = new Player(myGM, myFood);
-    myPlayer -> getPlayerPos(tempPos);
-    myFood -> generateFood(tempPos);
+    //myPlayer -> getPlayerPos();
+    objPosArrayList* tempPlayer = myPlayer->getPlayerPos();
+    myFood -> generateFood(tempPlayer);
 
 }
 
@@ -68,7 +69,7 @@ void RunLogic(void)
 {
     myPlayer -> updatePlayerDir();
     myPlayer -> movePlayer();
-    if(Player -> checkFoodConsumption())
+    if(myPlayer -> checkFoodConsumption())
     {
         myPlayer -> increasePlayerLength();
         myFood -> generateFood(myPlayer -> getPlayerPos());
@@ -82,11 +83,24 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen(); 
 
+    objPosArrayList* tempPosList = myPlayer->getPlayerPos();
     objPos tempPos;
-    objPos tempFoodPos;
-    myPlayer -> getPlayerPos(tempPos);  
+    objPos tempFoodPos;  
+    tempPosList -> getHeadElement(tempPos);
     myFood -> getFoodPos(tempFoodPos); 
+/*
+    for(int i = 0 ; i < myGM -> getBoardSizeY(); i++)
+    {
+        for(int j = 1; j < myGM -> getBoardSizeX() - 1; j++)
+        {
+            for(int k = 1; k < tempPos -> getSize() ; k++)
+            {
 
+            }
+        }
+    }
+
+*/
     MacUILib_printf("BoardSize: %d*%d, Player: <%d, %d> with %c\n", 
                     myGM -> getBoardSizeX(), myGM -> getBoardSizeY(), 
                     tempPos.x, tempPos.y, tempPos.symbol);
@@ -98,26 +112,32 @@ void DrawScreen(void)
         MacUILib_printf("#");
         for(int j = 1; j < myGM -> getBoardSizeX() - 1; j++)
         {
-            if(i == 0 || i == myGM -> getBoardSizeY() - 1)
+            for(int k = 0; k < tempPosList -> getSize() ; k++)
             {
-                MacUILib_printf("#");
-            }
-            else if(j == tempPos.x && i == tempPos.y)
-            {
-                MacUILib_printf("%c", tempPos.symbol);
-            }
-            else if(j == tempFoodPos.x && i == tempFoodPos.y)
-            {
-                MacUILib_printf("%c", tempFoodPos.symbol);
-            }
-            else
-            {
-                MacUILib_printf(" ");
+                tempPosList -> getElement(tempPos,k);
+                if(i == 0 || i == myGM -> getBoardSizeY() - 1)
+                {
+                    MacUILib_printf("#");
+                }
+                else if(j == tempPos.x && i == tempPos.y)
+                {
+                    MacUILib_printf("%c", tempPos.symbol);
+                }
+                //food
+                else if(j == tempFoodPos.x && i == tempFoodPos.y)
+                {
+                    MacUILib_printf("%c", tempFoodPos.symbol);
+                }
+                else
+                {
+                    MacUILib_printf(" ");
+                }
             }
         }
         MacUILib_printf("#");
         MacUILib_printf("\n");
     }
+
 }
 
 void LoopDelay(void)
