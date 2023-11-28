@@ -74,6 +74,10 @@ void RunLogic(void)
         myPlayer -> increasePlayerLength();
         myFood -> generateFood(myPlayer -> getPlayerPos());
     }
+    if(myPlayer -> checkSelfCollision())
+    {
+        myGM -> setExitTrue();
+    }
 
 
 }

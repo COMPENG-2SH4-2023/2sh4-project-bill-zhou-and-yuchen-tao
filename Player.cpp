@@ -142,3 +142,19 @@ void Player::increasePlayerLength()
     playerPosList->getHeadElement(playerPos);
     playerPosList->insertHead(playerPos);
 }
+
+bool Player::checkSelfCollision()
+{   
+    objPos head;
+    objPos body;
+    for(int i = 2 ; i < playerPosList -> getSize() ; i++)
+    {
+        playerPosList -> getHeadElement(head);
+        playerPosList -> getElement(body , i);
+        if(body.x == head.x && body.y == head.y)
+        {
+            return true;
+        }
+    }
+    return false;
+}
