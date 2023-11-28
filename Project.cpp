@@ -80,9 +80,9 @@ void RunLogic(void)
     }
     if(myGM -> getLoseFlagStatus() == true)
     {
-        //MacUILib_clearScreen();
+        MacUILib_clearScreen();
         MacUILib_printf("You Lose The Game! Try It Again!\n");
-        //MacUILib_printf("To quit the game, please prease 'q'\n");
+        MacUILib_printf("End of the Game, Your Score is: %d\n",myGM -> getScore());
         MacUILib_Delay(10000000);
         myGM -> setExitTrue();
     }
