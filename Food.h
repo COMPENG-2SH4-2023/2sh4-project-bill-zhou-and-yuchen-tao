@@ -8,14 +8,14 @@
 class Food
 {
     private:
-        objPos foodPos;
+        objPosArrayList* foodBucket;
 
     public:
         Food();
         ~Food();
 
         void generateFood(objPosArrayList* blockOff);
-        void getFoodPos(objPos &returnPos);
+        objPosArrayList* getFoodPos();
 
 };
 

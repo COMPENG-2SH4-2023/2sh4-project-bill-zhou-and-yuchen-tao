@@ -68,24 +68,25 @@ void RunLogic(void)
 {
     myPlayer -> updatePlayerDir();
     myPlayer -> movePlayer();
-    if(myPlayer -> checkFoodConsumption())
+    if(myPlayer -> checkFoodConsumption() == 1)
     {
+        myFood -> generateFood(myPlayer -> getPlayerPos());
         myPlayer -> increasePlayerLength();
         myGM -> incrementScore();
-        myFood -> generateFood(myPlayer -> getPlayerPos());
     }
+    else if(myPlayer -> checkFoodConsumption() == 2)
+    {
+        myFood -> generateFood(myPlayer -> getPlayerPos());
+        for(int i = 0; i < 10; i++)
+            myGM -> incrementScore();
+    }
+    
     if(myPlayer -> checkSelfCollision())
     {
         myGM -> setLoseTrue();
-    }
-    if(myGM -> getLoseFlagStatus() == true)
-    {
-        MacUILib_clearScreen();
-        MacUILib_printf("You Lose The Game! Try It Again!\n");
-        //MacUILib_printf("To quit the game, please prease 'q'\n");
-        MacUILib_Delay(1000000);
         myGM -> setExitTrue();
     }
+    
 
 }
 
@@ -94,9 +95,9 @@ void DrawScreen(void)
     MacUILib_clearScreen(); 
 
     objPosArrayList* tempPosList = myPlayer->getPlayerPos();
+    objPosArrayList* tempFoodList = myFood -> getFoodPos(); 
     objPos tempPos;
-    objPos tempFoodPos;  
-    myFood -> getFoodPos(tempFoodPos); 
+    objPos tempFoodPos;
 
     for(int i = 0; i < myGM -> getBoardSizeY(); i++)
     {
@@ -112,7 +113,14 @@ void DrawScreen(void)
                     break;
                 }
             }
-            //tempPosList -> getElement(tempPos,0);
+            for(int k = 0; k < tempFoodList -> getSize() ; k++)
+            {
+                tempFoodList -> getElement(tempFoodPos,k);
+                if(j == tempFoodPos.x && i == tempFoodPos.y)
+                {
+                    break;
+                }
+            }
             if(i == 0 || i == myGM -> getBoardSizeY() - 1)
             {
                 MacUILib_printf("#");
@@ -135,7 +143,7 @@ void DrawScreen(void)
         MacUILib_printf("#");
         MacUILib_printf("\n");
     }
-    MacUILib_printf("\tYour Score:%d\n",myGM -> getScore());
+    MacUILib_printf("\tScore:%d\n",myGM -> getScore());
 
 }
 
@@ -147,13 +155,23 @@ void LoopDelay(void)
 
 void CleanUp(void)
 {
-    MacUILib_clearScreen();    
+    MacUILib_clearScreen(); 
+    
+    if(myGM -> getLoseFlagStatus())
+    {
+        MacUILib_printf("Final Score:%d\n",myGM -> getScore());
+        MacUILib_printf("You Lose The Game! Try It Again!\n");
+        MacUILib_uninit();
+    }
+    else
+    {
+        MacUILib_uninit();
+    }
+       
 
     delete myFood;
     delete myPlayer;
     delete myGM;
-  
-    MacUILib_uninit();
 
 
 }

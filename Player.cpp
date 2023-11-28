@@ -115,22 +115,31 @@ void Player::movePlayer()
     }
 }
 
-bool Player::checkFoodConsumption()
+int Player::checkFoodConsumption()
 {
-    bool set;
+    int set;
     objPos playerPos;
-    playerPosList -> getHeadElement(playerPos);
     objPos foodPos;
-    food -> getFoodPos(foodPos);
+    playerPosList -> getHeadElement(playerPos);
+    objPosArrayList* foodBucket = food -> getFoodPos();
 
-
-    if(playerPos.x == foodPos.x && playerPos.y == foodPos.y)
+    for(int i = 0; i < foodBucket -> getSize(); i++)
     {
-        set = true;
-    }
-    else
-    {
-        set = false;
+        foodBucket -> getElement(foodPos, i);
+        if(playerPos.isPosEqual(&foodPos) && foodPos.symbol == '0')
+        {
+            set = 1;
+            break;
+        }
+        else if(playerPos.isPosEqual(&foodPos) && foodPos.symbol == '1')
+        {
+            set = 2;
+            break;
+        }
+        else
+        {
+            set = 0;
+        }
     }
 
     return set;
