@@ -35,6 +35,13 @@ int main(void)
     {
         GetInput();
         RunLogic();
+        if(myGM -> getLoseFlagStatus() == true)
+        {
+            MacUILib_clearScreen();
+            MacUILib_printf("You Lose The Game! Try It Again!");
+            MacUILib_Delay(10000000);
+            break;
+        }
         DrawScreen();
         LoopDelay();
     }
@@ -53,7 +60,6 @@ void Initialize(void)
     myFood = new Food();
     myGM = new GameMechs();
     myPlayer = new Player(myGM, myFood);
-    //myPlayer -> getPlayerPos();
     objPosArrayList* tempPlayer = myPlayer->getPlayerPos();
     myFood -> generateFood(tempPlayer);
 
@@ -76,7 +82,7 @@ void RunLogic(void)
     }
     if(myPlayer -> checkSelfCollision())
     {
-        myGM -> setExitTrue();
+        myGM -> setLoseTrue();
     }
 
 

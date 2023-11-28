@@ -46,7 +46,14 @@ int GameMechs::getBoardSizeY()
 {
     return boardSizeY;
 }
-
+bool GameMechs::getLoseFlagStatus()
+{
+    return loseFlag;
+}
+void GameMechs::setLoseTrue()
+{
+    loseFlag = true;
+}
 
 void GameMechs::setExitTrue()
 {
