@@ -82,8 +82,8 @@ void RunLogic(void)
     {
         MacUILib_clearScreen();
         MacUILib_printf("You Lose The Game! Try It Again!\n");
-        MacUILib_printf("End of the Game, Your Score is: %d\n",myGM -> getScore());
-        MacUILib_Delay(10000000);
+        //MacUILib_printf("To quit the game, please prease 'q'\n");
+        MacUILib_Delay(1000000);
         myGM -> setExitTrue();
     }
 
