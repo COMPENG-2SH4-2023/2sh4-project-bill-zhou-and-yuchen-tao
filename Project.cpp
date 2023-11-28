@@ -35,14 +35,6 @@ int main(void)
     {
         GetInput();
         RunLogic();
-        if(myGM -> getLoseFlagStatus() == true)
-        {
-            //MacUILib_clearScreen();
-            MacUILib_printf("You Lose The Game! Try It Again!\n");
-            //MacUILib_printf("To quit the game, please prease 'q'\n");
-            MacUILib_Delay(10000000);
-            break;
-        }
         DrawScreen();
         LoopDelay();
     }
@@ -79,13 +71,21 @@ void RunLogic(void)
     if(myPlayer -> checkFoodConsumption())
     {
         myPlayer -> increasePlayerLength();
+        myGM -> incrementScore();
         myFood -> generateFood(myPlayer -> getPlayerPos());
     }
     if(myPlayer -> checkSelfCollision())
     {
         myGM -> setLoseTrue();
     }
-
+    if(myGM -> getLoseFlagStatus() == true)
+    {
+        //MacUILib_clearScreen();
+        MacUILib_printf("You Lose The Game! Try It Again!\n");
+        //MacUILib_printf("To quit the game, please prease 'q'\n");
+        MacUILib_Delay(10000000);
+        myGM -> setExitTrue();
+    }
 
 }
 
@@ -135,6 +135,7 @@ void DrawScreen(void)
         MacUILib_printf("#");
         MacUILib_printf("\n");
     }
+    MacUILib_printf("\tYour Score:%d\n",myGM -> getScore());
 
 }
 
